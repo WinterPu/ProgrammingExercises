@@ -12,7 +12,7 @@ public:
 	//void DecompressFile(std::string path = "./output.bin");
 
 	void DecompressData();
-	void WriteFile(std::string path = "./reconstructed_file.txt");
+	void WriteFile(std::string path = "./reconstructed file.txt");
 private:
 	Node * root;
 	std::vector<bool> compressed_data;

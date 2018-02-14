@@ -31,8 +31,8 @@ int main() {
 			resource_manager.ShowGraph();
 		}
 		else if (command == "help") {
-			ShowCommandInfo("insert","insert new nodes");
-			ShowCommandInfo("delete", "delete old nodes");
+			ShowCommandInfo("insert [name a] [name b]","it will insert new nodes and links between [a] and [b]");
+			ShowCommandInfo("delete [name]", "delete the node [name]");
 			ShowCommandInfo("show", "show the whole graph");
 			ShowCommandInfo("q", " quit the program and save the graph");
 		}
