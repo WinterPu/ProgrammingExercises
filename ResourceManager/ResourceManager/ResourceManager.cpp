@@ -55,7 +55,12 @@ void ResourceManager::ShowStatusInfo(STATUS status)
 	if (status == READ_SUCCESS) {
 		std::cout << "File Read Complete!";
 	}
+
+	if (status == SAVE_SUCCESS) {
+		std::cout << "File Save Complete!";
+	}
 	std::cout  << std::endl;
+
 }
 
 void ResourceManager::DeleteNode(std::string name)
@@ -118,5 +123,41 @@ void ResourceManager::Insert(std::string derivative_name, std::string material_n
 	derivative->links.insert(material);
 	material->relid_links.insert(derivative);
 	derivative->useable = true;
+}
+
+void ResourceManager::ShowGraph()
+{
+
+	std::cout << "-- Resource Graph --" << std::endl;
+	std::map<std::string, Node*>::iterator iter;
+
+	for (iter = node_list.begin(); iter != node_list.end(); iter++)
+	{
+		std::cout << iter->first << " -> ";
+		std::set<Node*> links_set = iter->second->links;
+		for (std::set<Node*>::iterator iter = links_set.begin(); iter != links_set.end();iter++) {
+			std::cout << (*iter)->name << " ";
+		}
+		std::cout << std::endl;
+	}
+	std::cout << "-- End Line --" << std::endl;
+}
+
+void ResourceManager::SaveGraph(std::string path)
+{
+	std::ofstream output(path);
+
+	std::map<std::string, Node*>::iterator iter;
+	for (iter = node_list.begin(); iter != node_list.end(); iter++)
+	{
+		output << iter->first << " ";
+		std::set<Node*> links_set = iter->second->links;
+		for (std::set<Node*>::iterator iter = links_set.begin(); iter != links_set.end(); iter++) {
+			output << (*iter)->name << " ";
+		}
+		output << std::endl;
+	}
+
+	ShowStatusInfo(SAVE_SUCCESS);
 }
 

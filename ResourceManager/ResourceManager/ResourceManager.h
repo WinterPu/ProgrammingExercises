@@ -25,7 +25,7 @@ public:
 class ResourceManager {
 
 public:
-	static const enum STATUS {READ_SUCCESS};
+	static const enum STATUS {READ_SUCCESS,SAVE_SUCCESS};
 	static const enum ERROR_INFO {FILE_OPEN_ERROR,NO_SEARCH_RESULT};
 
 	void ReadFromFile();
@@ -37,6 +37,10 @@ public:
 	void DeleteNode(std::string name);
 
 	void Insert(std::string derivative_name, std::string material_name);
+
+	void ShowGraph();
+	void SaveGraph(std::string path ="./resource graph.txt");
+
 private:
 	std::map<std::string,Node*> node_list;
 };
