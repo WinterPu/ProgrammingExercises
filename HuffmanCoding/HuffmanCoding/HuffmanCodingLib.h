@@ -10,7 +10,6 @@
 #include <stack>
 #include <map>
 
-#define DEBUG 
 /*
 Ref:
 Binary File I/O:

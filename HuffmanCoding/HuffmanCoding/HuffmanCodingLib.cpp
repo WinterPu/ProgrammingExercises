@@ -8,7 +8,7 @@ void ShowErrorInfo(ERROR_INFO error)
 		std::cout << "File Open Error:";
 		std::cout << " please check your input file path ";
 	}
-	if (error == EMPTY_DATA)
+	else if (error == EMPTY_DATA)
 	{
 		// name - suggestion
 		std::cout << "DATA EMPTY";

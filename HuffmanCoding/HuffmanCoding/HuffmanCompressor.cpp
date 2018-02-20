@@ -3,6 +3,7 @@
 void HuffmanCompressor::Compress(std::string source_path, std::string output_path, std::string tree_path)
 {
 	status = WAITING;
+	//read source file & build the huffman tree
 	ReadFromFile(source_path);
 
 	if (status == ERROR)
@@ -10,7 +11,9 @@ void HuffmanCompressor::Compress(std::string source_path, std::string output_pat
 	status = READY;
 
 	CompressFile();
+	//save the compressed file
 	WriteFile(output_path);
+	//save the huffman tree
 	SaveHuffmanTree(tree_path);
 	
 	status = SUCCESS;
@@ -20,8 +23,8 @@ void HuffmanCompressor::Compress(std::string source_path, std::string output_pat
 void HuffmanCompressor::ReadFromFile(std::string path)
 {
 	//read each byte from the file
-
-	std::fstream file(path);
+	//Ref:https://stackoverflow.com/questions/229924/difference-between-files-writen-in-binary-and-text-mode
+	std::fstream file(path,std::ios::in | std::ios::binary);
 	if (!file.is_open())
 	{
 		ShowErrorInfo(FILE_OPEN_ERROR);
@@ -38,11 +41,12 @@ void HuffmanCompressor::ReadFromFile(std::string path)
 	// read the file
 	file.read(&file_data[0], file_size);
 
-
+	//instead of
 	//std::string byte_data;
 	//while (file >> byte_data) {
 	//	std::cout << byte_data<<std::endl;
 	//}
+
 
 	for (int i = 0; i < file_data.size(); i++) {
 		if (frequency_list.find(file_data[i]) != frequency_list.end())
@@ -75,6 +79,7 @@ void HuffmanCompressor::BuildHuffmanTree()
 		min_heap.push(tmp);
 	}
 	
+	//to handle the case: when there is only 1 kind of symbol.
 	if (frequency_list.size() == 1) {
 		if(frequency_list.find('$') != frequency_list.end())
 			min_heap.push(new Node('#',0,true));
@@ -136,7 +141,6 @@ void HuffmanCompressor::WriteFile(std::string path)
 	std::ofstream output_file(path,std::ios::out|std::ios::binary);
 	int total_num = compressed_data.size();
 	int pending_bits_num = 8 - compressed_data.size() % 8;
-	//output_file << (char)pending_bits_num;
 	char tmp = (char)pending_bits_num;
 	output_file.write(&tmp, 1);
 

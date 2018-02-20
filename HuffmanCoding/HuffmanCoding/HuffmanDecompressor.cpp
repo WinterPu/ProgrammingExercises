@@ -3,7 +3,9 @@
 void HuffmanDecompressor::Decompress(std::string file_path, std::string tree_path, std::string output_path)
 {
 	status = WAITING;
+	//read the compressed file
 	ReadFromFile(file_path);
+	//read the huffman tree & reconstruct it
 	ReconstructHuffmanTree(tree_path);
 
 	if (status == ERROR)
@@ -11,6 +13,7 @@ void HuffmanDecompressor::Decompress(std::string file_path, std::string tree_pat
 	status = READY;
 
 	DecompressData();
+	//save the reconstructed file
 	WriteFile(output_path);
 
 	status = SUCCESS;
@@ -88,11 +91,8 @@ void HuffmanDecompressor::ReadFromFile(std::string path)
 	file.read(&file_data[0], file_size);
 
 
-	//std::string byte_data;
-	//while (file >> byte_data) {
-	//	std::cout << byte_data<<std::endl;
-	//}
-	
+
+
 	int num_pending_zero;
 	for (int i = 0; i < file_data.size(); i++) {
 		
@@ -126,9 +126,6 @@ void HuffmanDecompressor::ReadFromFile(std::string path)
 
 
 
-
-
-
 	//char buffer;
 	//int count = 0;
 	//while (file >> buffer) {
@@ -146,6 +143,7 @@ void HuffmanDecompressor::ReadFromFile(std::string path)
 	//			break;
 	//	}
 	//}
+
 	file.close();
 }
 
@@ -173,10 +171,8 @@ void HuffmanDecompressor::WriteFile(std::string path)
 {
 	std::ofstream output(path);
 	for (int i = 0; i < decompressed_data.size(); i++)
-	{
-		DEBUG;
 		output << decompressed_data[i];
-	}
+
 	ShowStatusInfo(SAVE_DECOMPRESSED_FIlE_SUCCESS);
 	output.close();
 }

@@ -25,8 +25,7 @@ protected:
 	void WriteFile(std::string path);
 
 	void SaveHuffmanTree(std::string path);
-	
-	
+
 	//void SaveInPostOrder(Node* node,std::vector<Node*>& results);
 private:
 	HC_STATUS status;

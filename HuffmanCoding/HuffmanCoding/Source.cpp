@@ -11,7 +11,7 @@ int main() {
 	std::string in_path, out_path;
 	std::cout << "please enter the input file path" << std::endl;
 	while (std::getline(std::cin, in_path)) {
-		std::cout << "please enter the compressed file path" << std::endl;
+		std::cout << "please enter the output (compressed) file path" << std::endl;
 		std::getline(std::cin, out_path);
 		in_path = (in_path == "") ? "./data.txt" : in_path;
 		out_path = (out_path == "") ? "./output.bin" : out_path;
@@ -20,7 +20,10 @@ int main() {
 		HuffmanCompressor compressor;
 		compressor.Compress(in_path,out_path);
 		if (!compressor.CheckCompressionStatus())
+		{
+			std::cout << "please enter the input file path" << std::endl;
 			continue;
+		}
 		HuffmanDecompressor decompressor;
 		decompressor.Decompress(out_path);
 
