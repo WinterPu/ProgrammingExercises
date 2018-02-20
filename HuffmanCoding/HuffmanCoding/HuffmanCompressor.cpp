@@ -74,6 +74,13 @@ void HuffmanCompressor::BuildHuffmanTree()
 		Node* tmp = new Node(iter->first, iter->second,true);
 		min_heap.push(tmp);
 	}
+	
+	if (frequency_list.size() == 1) {
+		if(frequency_list.find('$') != frequency_list.end())
+			min_heap.push(new Node('#',0,true));
+		else 
+			min_heap.push(new Node('$', 0, true));
+	}
 	// Iterate while size of heap doesn't become 1
 	while (min_heap.size() != 1) {
 
