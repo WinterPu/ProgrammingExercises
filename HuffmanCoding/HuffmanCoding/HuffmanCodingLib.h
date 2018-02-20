@@ -10,7 +10,7 @@
 #include <stack>
 #include <map>
 
-
+#define DEBUG 
 /*
 Ref:
 Binary File I/O:
@@ -34,7 +34,7 @@ struct cmp {
 };
 
 
-static const enum STATUS { READ_SUCCESS };
+static const enum STATUS { READ_SUCCESS,SAVE_TREE_SUCCESS,SAVE_COMPRESSED_FILE_SUCCESS,SAVE_DECOMPRESSED_FIlE_SUCCESS };
 static const enum ERROR_INFO { FILE_OPEN_ERROR, EMPTY_DATA };
 
 void ShowErrorInfo(ERROR_INFO error);

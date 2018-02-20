@@ -1,5 +1,22 @@
 #include "HuffmanCompressor.h"
 
+void HuffmanCompressor::Compress(std::string source_path, std::string output_path, std::string tree_path)
+{
+	status = WAITING;
+	ReadFromFile(source_path);
+
+	if (status == ERROR)
+		return;
+	status = READY;
+
+	CompressFile();
+	WriteFile(output_path);
+	SaveHuffmanTree(tree_path);
+	
+	status = SUCCESS;
+	return;
+}
+
 void HuffmanCompressor::ReadFromFile(std::string path)
 {
 	//read each byte from the file
@@ -8,6 +25,7 @@ void HuffmanCompressor::ReadFromFile(std::string path)
 	if (!file.is_open())
 	{
 		ShowErrorInfo(FILE_OPEN_ERROR);
+		status = ERROR;
 		return;
 	}
 
@@ -27,7 +45,6 @@ void HuffmanCompressor::ReadFromFile(std::string path)
 	//}
 
 	for (int i = 0; i < file_data.size(); i++) {
-		//std::cout << (int)file_data[i] << std::endl;
 		if (frequency_list.find(file_data[i]) != frequency_list.end())
 		{
 			frequency_list[file_data[i]]++;
@@ -45,6 +62,7 @@ void HuffmanCompressor::BuildHuffmanTree()
 {
 	if (frequency_list.size() == 0) {
 		ShowErrorInfo(EMPTY_DATA);
+		status = ERROR;
 		return;
 	}
 
@@ -81,7 +99,7 @@ void HuffmanCompressor::StoreCodes(Node * root, std::string str)
 	if (root==NULL)
 		return;
 
-	if (root->data != '$')
+	if (root->is_leaf)
 		code_list.insert(std::pair<char,std::string>(root->data,str));
 
 	StoreCodes(root->left, str + "0");
@@ -138,7 +156,7 @@ void HuffmanCompressor::WriteFile(std::string path)
 	if (bit_count != 0)
 		output_file.write(&accumulator, 1);
 
-	
+	ShowStatusInfo(SAVE_COMPRESSED_FILE_SUCCESS);
 	output_file.close();
 }
 
@@ -164,6 +182,8 @@ void HuffmanCompressor::SaveHuffmanTree(std::string path)
 	for (int i = result.size() - 1; i >= 0; i--) {
 		output << result[i]->data << " " << result[i]->frequency<<" "<<(result[i]->is_leaf? 1:0) << std::endl;
 	}
+
+	ShowStatusInfo(SAVE_TREE_SUCCESS);
 	output.close();
 }
 
