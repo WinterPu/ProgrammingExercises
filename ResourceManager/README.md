@@ -5,7 +5,7 @@
 2018-2-12
 
 ## 2. User Guide
-### 1. Console Mode
+### #1. Console Mode
 
 Reads a file "resource.txt" (from the current directory) 
 
@@ -23,7 +23,7 @@ Reads a file "resource.txt" (from the current directory)
 
 ![Console Mode](https://github.com/WinterPu/ProgrammingExercises/blob/master/ResourceManager/--%20Report%20Images%20--/Console%20Mode%20GUI.png)
 
-### 2. QT Version
+### #2. QT Version
 ![Qt](https://github.com/WinterPu/ProgrammingExercises/blob/master/ResourceManager/--%20Report%20Images%20--/GUI.png)
 
 
